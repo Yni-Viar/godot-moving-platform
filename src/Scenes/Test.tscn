@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnd7vacptk6f7"]
+
+[ext_resource type="PackedScene" uid="uid://b2o8ikon245f3" path="res://Assets/Models/cable_car.tscn" id="1_dv03q"]
+
+[sub_resource type="Curve3D" id="Curve3D_h2221"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -35.6805, 0, -33.4431, 0, 0, 0, 0, 0, 0, 21.1964, 0, -34.1497, 0, 0, 0, 0, 0, 0, 10.1272, 0, 7.88975, 0, 0, 0, 0, 0, 0, -40.3908, 0, 10.1271, 0, 0, 0, 0, 0, 0, -35.6805, 0, -33.4431),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Test" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.7843, -0.317476, 0.532994, 0, 0.859139, 0.511743, -0.620381, -0.40136, 0.673823, 9.62596, 8.92902, 15.4238)
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_h2221")
+
+[node name="CableCar" parent="Path3D" instance=ExtResource("1_dv03q")]
+transform = Transform3D(0.0124215, 0, -0.999923, 0, 1, 0, 0.999923, 0, 0.0124215, -14.2322, 0, -33.7096)
+progress = 21.45
+waypoints = {
+21.45: true,
+109.05: false
+}
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.816729, 0.110747, -0.566294, 0.0466951, 0.965505, 0.256164, 0.575129, -0.23566, 0.783385, 0, 6.72037, 0)
