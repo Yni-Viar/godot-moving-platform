@@ -18,7 +18,7 @@ transform = Transform3D(0.7843, -0.317476, 0.532994, 0, 0.859139, 0.511743, -0.6
 curve = SubResource("Curve3D_h2221")
 
 [node name="CableCar" parent="Path3D" instance=ExtResource("1_dv03q")]
-transform = Transform3D(0.0124215, 0, -0.999923, 0, 1, 0, 0.999923, 0, 0.0124215, -14.2322, 0, -33.7096)
+transform = Transform3D(0.0124223, 0, -0.999923, 0, 1, 0, 0.999923, 0, 0.0124223, -14.2322, 0, -33.7096)
 progress = 21.45
 waypoints = {
 21.45: true,
