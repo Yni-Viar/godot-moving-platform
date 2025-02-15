@@ -4577,10 +4577,10 @@ script = ExtResource("1_3npim")
 is_headwagon = false
 speed = 15.0
 move_sound = "res://Sounds/General/Train/Generic/trainmove_safe.wav"
-animatable_path = NodePath("Mesh")
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3.65695)
+sync_to_physics = false
 
 [node name="Hold_021" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(3.57628e-07, 0, -1, 0, 1, 0, 1, 0, 3.57628e-07, 0.853362, 0.922949, -6.19608)

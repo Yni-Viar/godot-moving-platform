@@ -28,8 +28,6 @@ enum TransportType {CABLECAR, TRAIN}
 # player position to transport position. This had not so good drawbacks in trains
 ## Since v2, it holds smooth rotation, while transport moves along the curve
 @export var objects_to_teleport : Array
-## Necessary!!! Needs to update AnimationMesh position
-@export var animatable_path: NodePath
 ## Necessary!!! Keys are used only in head wagon, values used both by head and other wagons.
 ## This is how stops are made.
 @export var waypoints : Dictionary = {}
@@ -99,8 +97,6 @@ func _physics_process(delta):
 								wagons[i].call("stop")
 				# That is how train moves
 				progress += sample_speed * delta
-				# Move the mesh (AnimationBody3D do not move automatically)
-				get_node(animatable_path).global_position = global_position
 				if sample_speed < speed:
 					if progress < waypoints.keys()[last_move] - speed * 8:
 						# Increase the speed
@@ -109,7 +105,6 @@ func _physics_process(delta):
 					# Move of the wagons and move wagons mesh
 					for i in range(wagons.size()):
 						wagons[i].progress += sample_speed * delta
-						wagons[i].get_node(animatable_path).global_position = wagons[i].global_position
 				# Smooth rotation for player(s) (and item(s))
 				for w in wagons.size():
 					for i in range(wagons[w].objects_to_teleport.size()):

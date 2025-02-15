@@ -46,7 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8158, 18.5657)
 curve = SubResource("Curve3D_h2221")
 
 [node name="CableCar" parent="Path3D" instance=ExtResource("1_dv03q")]
-transform = Transform3D(0.00661396, 0.420998, -0.907034, -1.89242e-06, 0.907055, 0.421007, 0.999961, -0.00278286, 0.00600011, -66.1638, 40.5489, -33.5718)
+transform = Transform3D(0.00661396, 0.420998, -0.907034, -1.89242e-06, 0.907055, 0.421007, 0.999961, -0.00278286, 0.00600012, -66.1638, 40.5489, -33.5718)
 progress = 21.45
 waypoints = {
 21.45: true,
@@ -80,10 +80,10 @@ waypoints = {
 397.85: false
 }
 connected_wagons = Array[NodePath]([NodePath("../MetrowagonAnka2")])
-wagon_offset = 20.0
+wagon_offset = 26.0
 
 [node name="MetrowagonAnka2" parent="Path3D2" instance=ExtResource("3_l40uj")]
-transform = Transform3D(-0.00257455, 0.0040234, 0.999911, 0.00140559, 0.99995, -0.00401965, -0.999948, 0.00139524, -0.0025801, 9.66814, 0.160055, -34.7249)
+transform = Transform3D(-0.00257467, 0.0040234, 0.999911, 0.00140559, 0.99995, -0.00401965, -0.999948, 0.00139524, -0.00258022, 9.6681, 0.160055, -34.7249)
 progress = 37.35
 waypoints = {
 63.05: false,

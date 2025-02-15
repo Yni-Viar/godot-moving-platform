@@ -4575,10 +4575,10 @@ size = Vector3(3.89655, 3.91937, 23.4471)
 script = ExtResource("1_kgqd0")
 speed = 15.0
 move_sound = "res://Sounds/General/Train/Generic/trainmove_safe.wav"
-animatable_path = NodePath("Mesh")
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.26309)
+sync_to_physics = false
 
 [node name="Hold_021" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(3.57628e-07, 0, -1, 0, 1, 0, 1, 0, 3.57628e-07, 0.853362, 0.922949, -6.19608)

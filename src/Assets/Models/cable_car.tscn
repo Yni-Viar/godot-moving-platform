@@ -257,7 +257,6 @@ size = Vector3(3.836, 3.64789, 5.77252)
 script = ExtResource("1_o8j5p")
 speed = 10.0
 move_sound = "res://Sounds/General/CableCar/CableCar.ogg"
-animatable_path = NodePath("Mesh")
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -4.27663, 0)
