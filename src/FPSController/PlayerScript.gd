@@ -50,9 +50,6 @@ func _input(event: InputEvent) -> void:
 		var player_rotation = $PlayerHead.rotation_degrees
 		player_rotation.x = clamp($PlayerHead.rotation_degrees.x, -85, 85)
 		$PlayerHead.rotation_degrees = player_rotation
-	
-	if Input.is_action_just_pressed("mode_kinematic"):
-		get_parent().get_node("PlayerUI").visible = !get_parent().get_node("PlayerUI").visible
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lforq73i6n1t"
+uid="uid://d04uqor84quwy"
 path.s3tc="res://.godot/imported/Metal024_1K-PNG_NormalGL.png-62aeff513f50fb1837fb46c55e54981a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -24,8 +24,8 @@ compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://Assets/Models/SubwayTrain/old/Metal024_1K-PNG_NormalGL.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

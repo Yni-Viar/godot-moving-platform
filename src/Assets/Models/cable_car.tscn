@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=4 uid="uid://b2o8ikon245f3"]
 
 [ext_resource type="Texture2D" uid="uid://dmiwjnyu42j5r" path="res://Assets/Models/CableCar/CableCar_Cube_base.png" id="1_65lpn"]
-[ext_resource type="Script" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_o8j5p"]
+[ext_resource type="Script" uid="uid://xies0jb5gk1c" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_o8j5p"]
 [ext_resource type="Texture2D" uid="uid://8u33tfum1yqa" path="res://Assets/Models/CableCar/CableCar_Cube_metal-CableCar_Cube_rough.png" id="2_b8t0g"]
 [ext_resource type="Texture2D" uid="uid://cyyql2ki5q33i" path="res://Assets/Models/CableCar/CableCar_Cube_nor.png" id="3_g7kwl"]
 [ext_resource type="Texture2D" uid="uid://domwdu8r8e4tc" path="res://Assets/Models/CableCar/CableCar_WagonDoorWide_001_base.png" id="4_yf5i2"]
@@ -246,8 +246,8 @@ tracks/1/keys = PackedFloat32Array(0, 1, -1.84175, 0.259669, -0.550094, 0.2, 1, 
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yg0yk"]
 _data = {
-"door_open_left": SubResource("Animation_tsf2m"),
-"door_open_right": SubResource("Animation_r5w28")
+&"door_open_left": SubResource("Animation_tsf2m"),
+&"door_open_right": SubResource("Animation_r5w28")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hkpav"]
@@ -319,7 +319,7 @@ shape = SubResource("ConcavePolygonShape3D_ubcwd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_yg0yk")
+&"": SubResource("AnimationLibrary_yg0yk")
 }
 
 [node name="DoorSounds" type="Node3D" parent="."]

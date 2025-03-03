@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cu440emlhve1m"]
 
-[ext_resource type="Script" path="res://FPSController/PlayerScript.gd" id="1_rticr"]
+[ext_resource type="Script" uid="uid://dy2vaccsr1t87" path="res://FPSController/PlayerScript.gd" id="1_rticr"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3c6ve"]
 flip_faces = true
@@ -29,7 +29,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uiy40"]
 _data = {
-"Walk": SubResource("Animation_i7x7w")
+&"Walk": SubResource("Animation_i7x7w")
 }
 
 [node name="Player" type="CharacterBody3D" groups=["Players"]]

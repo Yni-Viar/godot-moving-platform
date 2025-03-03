@@ -1,12 +1,12 @@
 [gd_scene load_steps=354 format=4 uid="uid://bh3em2b4sutma"]
 
-[ext_resource type="Script" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_3npim"]
+[ext_resource type="Script" uid="uid://xies0jb5gk1c" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_3npim"]
 [ext_resource type="Texture2D" uid="uid://d1lmdmxbr72k8" path="res://Assets/Models/SubwayTrain/old/Leather033A_2K-PNG_Color.png" id="2_5vn7n"]
 [ext_resource type="Texture2D" uid="uid://dglvguwipcmid" path="res://Assets/Models/SubwayTrain/old/Leather033A_2K-PNG_Roughness.png" id="3_trtvu"]
 [ext_resource type="Texture2D" uid="uid://dsxg4nxeqkyyn" path="res://Assets/Models/SubwayTrain/old/Leather033A_1K-PNG_NormalGL.png" id="4_b8mlr"]
 [ext_resource type="Texture2D" uid="uid://3w3txjwx7qcm" path="res://Assets/Models/SubwayTrain/old/Metal024_2K-PNG_Color.png" id="5_d6tno"]
 [ext_resource type="Texture2D" uid="uid://rgjkwvmswyie" path="res://Assets/Models/SubwayTrain/old/Metal024_2K-PNG_Metalness-Metal024_2K-PNG_Roughness.png" id="6_ut17m"]
-[ext_resource type="Texture2D" uid="uid://lforq73i6n1t" path="res://Assets/Models/SubwayTrain/old/Metal024_1K-PNG_NormalGL.png" id="7_0qvc1"]
+[ext_resource type="Texture2D" uid="uid://d04uqor84quwy" path="res://Assets/Models/SubwayTrain/old/Metal024_1K-PNG_NormalGL.png" id="7_0qvc1"]
 [ext_resource type="Texture2D" uid="uid://ljjlfcv2vtj6" path="res://Assets/Models/SubwayTrain/old/Metal046B_2K_Color.png" id="8_m7j3s"]
 [ext_resource type="Texture2D" uid="uid://krm14qsqcubi" path="res://Assets/Models/SubwayTrain/old/PaintedMetal012_1K-PNG_Color.png" id="9_7vrgk"]
 [ext_resource type="Texture2D" uid="uid://de2k8scmw45ne" path="res://Assets/Models/SubwayTrain/old/PaintedMetal012_2K-PNG_Metalness-PaintedMetal012_2K-PNG_Roughness.png" id="10_1ijhd"]
@@ -4564,9 +4564,9 @@ tracks/7/keys = PackedFloat32Array(0, 1, -1.87107, 0.013609, 6.87424, 0.999, 1, 
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5fq82"]
 _data = {
-"RESET": SubResource("Animation_uu8rd"),
-"door_open_left": SubResource("Animation_q0add"),
-"door_open_right": SubResource("Animation_y8iln")
+&"RESET": SubResource("Animation_uu8rd"),
+&"door_open_left": SubResource("Animation_q0add"),
+&"door_open_right": SubResource("Animation_y8iln")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j4hlc"]
@@ -5427,7 +5427,7 @@ distance_fade_shadow = 20.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_5fq82")
+&"": SubResource("AnimationLibrary_5fq82")
 }
 
 [node name="Move" type="AudioStreamPlayer3D" parent="."]
