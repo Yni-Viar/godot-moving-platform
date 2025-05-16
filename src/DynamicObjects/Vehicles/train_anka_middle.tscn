@@ -1,4 +1,4 @@
-[gd_scene load_steps=354 format=4 uid="uid://bcq2aepuerot7"]
+[gd_scene load_steps=354 format=4 uid="uid://dno2pe7xi2iw1"]
 
 [ext_resource type="Script" uid="uid://xies0jb5gk1c" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_tux5h"]
 [ext_resource type="Texture2D" uid="uid://d1lmdmxbr72k8" path="res://Assets/Models/SubwayTrain/old/Leather033A_2K-PNG_Color.png" id="2_2p0kh"]
@@ -4567,14 +4567,15 @@ _data = {
 &"door_open_right": SubResource("Animation_q0add")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jh8ue"]
-size = Vector3(3.89655, 3.91937, 23.4471)
+[sub_resource type="BoxShape3D" id="BoxShape3D_f5qbj"]
+size = Vector3(4.0069, 4.17203, 24.1266)
 
 [node name="MetrowagonAnka" type="PathFollow3D"]
 script = ExtResource("1_tux5h")
 is_headwagon = false
-speed = 15.0
-move_sound = "res://Sounds/General/Train/Generic/trainmove_safe.wav"
+speed = 10.0
+move_sound = "res://Sounds/Vehicles/Train/Anka/subway-wagon_short.ogg"
+animatable_path = NodePath("Mesh")
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.91546)
@@ -5421,16 +5422,16 @@ libraries = {
 }
 
 [node name="Move" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.77125, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.71117, -0.461509)
 max_distance = 64.0
 
 [node name="PlayerArea" type="Area3D" parent="."]
-collision_layer = 7
-collision_mask = 7
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223694, 0.772614, -0.683044)
-shape = SubResource("BoxShape3D_jh8ue")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0796826, 0.725631, 0)
+shape = SubResource("BoxShape3D_f5qbj")
 
 [connection signal="body_entered" from="PlayerArea" to="." method="on_player_area_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="on_player_area_body_exited"]

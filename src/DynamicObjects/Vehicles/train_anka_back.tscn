@@ -1,4 +1,4 @@
-[gd_scene load_steps=354 format=4 uid="uid://bh3em2b4sutma"]
+[gd_scene load_steps=356 format=4 uid="uid://dwscd8ub8liuf"]
 
 [ext_resource type="Script" uid="uid://xies0jb5gk1c" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_3npim"]
 [ext_resource type="Texture2D" uid="uid://d1lmdmxbr72k8" path="res://Assets/Models/SubwayTrain/old/Leather033A_2K-PNG_Color.png" id="2_5vn7n"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bou0khelumxci" path="res://Assets/Models/SubwayTrain/old/wood_table_001_diff_1k.png" id="21_6a0ko"]
 [ext_resource type="Texture2D" uid="uid://thlp7nxl4r1y" path="res://Assets/Models/SubwayTrain/old/wood_table_001_rough_2k.png" id="22_e10uc"]
 [ext_resource type="Texture2D" uid="uid://cecogmvt5cgwu" path="res://Assets/Models/SubwayTrain/old/wood_table_001_nor_gl_1k.png" id="23_jf61w"]
+[ext_resource type="Script" uid="uid://c776vgyx0vi12" path="res://Scripts/Triggers/StationTrigger.gd" id="25_2bi1p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08xoi"]
 resource_name = "Hold"
@@ -4569,14 +4570,17 @@ _data = {
 &"door_open_right": SubResource("Animation_y8iln")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_j4hlc"]
-size = Vector3(3.89655, 3.91937, 23.4471)
+[sub_resource type="BoxShape3D" id="BoxShape3D_uhsyi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ph86"]
+size = Vector3(4.25265, 4.68002, 24.1161)
 
 [node name="MetrowagonAnka" type="PathFollow3D"]
 script = ExtResource("1_3npim")
 is_headwagon = false
-speed = 15.0
-move_sound = "res://Sounds/General/Train/Generic/trainmove_safe.wav"
+speed = 10.0
+move_sound = "res://Sounds/Vehicles/Train/Anka/subway-wagon_short.ogg"
+animatable_path = NodePath("Mesh")
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -3.65695)
@@ -5430,17 +5434,27 @@ libraries = {
 &"": SubResource("AnimationLibrary_5fq82")
 }
 
+[node name="StationDetect" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.246152, 0.894281, 10.6397)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("25_2bi1p")
+enter = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StationDetect"]
+shape = SubResource("BoxShape3D_uhsyi")
+
 [node name="Move" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.77125, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.71117, -0.461509)
 max_distance = 64.0
 
 [node name="PlayerArea" type="Area3D" parent="."]
-collision_layer = 7
-collision_mask = 7
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223694, 0.772614, -0.683044)
-shape = SubResource("BoxShape3D_j4hlc")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223229, 0.683914, -0.795457)
+shape = SubResource("BoxShape3D_5ph86")
 
 [connection signal="body_entered" from="PlayerArea" to="." method="on_player_area_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="on_player_area_body_exited"]

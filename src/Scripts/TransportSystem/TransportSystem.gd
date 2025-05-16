@@ -1,5 +1,5 @@
 extends PathFollow3D
-## Transport system
+## Rail Transport system
 ## Made by Yni, licensed under MIT license
 class_name TransportSystem
 
@@ -7,9 +7,6 @@ class_name TransportSystem
 signal changed_launch_state(start: bool)
 ## Lock or unlock moving
 signal changed_lock_state(start: bool)
-enum TransportType {CABLECAR, TRAIN}
-# Transport type (currently unused)
-#@export var transport_type: TransportType = TransportType.CABLECAR
 ## Only head wagons can move by themselves
 @export var is_headwagon: bool = true
 ## Will be the transport locked on start
@@ -28,9 +25,11 @@ enum TransportType {CABLECAR, TRAIN}
 # player position to transport position. This had not so good drawbacks in trains
 ## Since v2, it holds smooth rotation, while transport moves along the curve
 @export var objects_to_teleport : Array
+## Necessary!!! Needs to update AnimationMesh position
+@export var animatable_path: NodePath
 ## Necessary!!! Keys are used only in head wagon, values used both by head and other wagons.
 ## This is how stops are made.
-@export var waypoints : Dictionary = {}
+@export var waypoints : Dictionary[float, bool] = {}
 ## If true - opens the right door, else opens left door
 @export var which_door_open_on_start: bool = true
 ## Connected wagons. Connected wagons must have is_headwagon property DISABLED!
@@ -39,20 +38,22 @@ enum TransportType {CABLECAR, TRAIN}
 @export var wagon_offset: float
 ## The ACTUAL speed (if you are making networked game, sync this value)
 @export var sample_speed = 0.1
+## Next stop
+@export var last_move = 0
+## Checks, if the train have already reached the end.
+## In this case, "the end" means the train passed the last "station" on this curve/waypoint
+@export var at_end: bool = false
 var _move_sounds: Array[AudioStream] = []
 var left_door_open: bool = false
 var right_door_open: bool = false
-## Next stop
-var last_move = 0
-## Checks, if the train have already reached the end.
-## In this case, "the end" means the train passed the last "station" on this curve/waypoint
-var at_end: bool = false
 ## Wagons database
 var wagons: Array[TransportSystem]
 ## For checking difference between rotation
 var rotator: PackedVector3Array
 ## Current_move_sound
 var current_move_sound: int = -1
+## Emergency stop. Currently used to avoid train bumping into another train.
+var emergency_stop: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -68,6 +69,9 @@ func _ready():
 				get_node(connected_wagons[i]).progress = get_node(connected_wagons[i - 1]).progress - wagon_offset
 			wagons.append(get_node(connected_wagons[i]))
 			rotator.append(wagons[i].global_rotation)
+	# Jolt physics optimization
+	$Mesh.collision_layer = 0
+	$Mesh.collision_mask = 0
 	if !is_moving:
 		stop()
 
@@ -88,8 +92,15 @@ func _physics_process(delta):
 								wagons[i].progress = 0
 				else:
 					# stop at the "station"
-					if progress > waypoints.keys()[last_move] - speed * 8:
-						sample_speed = move_toward(sample_speed, 0.1, 0.5 * delta)
+					if progress > waypoints.keys()[last_move] - speed * 12 || emergency_stop:
+						sample_speed = move_toward(sample_speed, 0.5, 0.5 * delta)
+						# Decrease pitch
+						if $Move.pitch_scale > 0.5:
+							$Move.pitch_scale -= 0.015625 * delta
+							for i in range(wagons.size()):
+								wagons[i].get_node("Move").pitch_scale -= 0.015625 * delta
+						if emergency_stop:
+							stop(false)
 					if progress + 0.001 >= waypoints.keys()[last_move]:
 						stop()
 						if wagons.size() > 0:
@@ -98,13 +109,21 @@ func _physics_process(delta):
 				# That is how train moves
 				progress += sample_speed * delta
 				if sample_speed < speed:
-					if progress < waypoints.keys()[last_move] - speed * 8:
+					if progress < waypoints.keys()[last_move] - speed * 12 || at_end:
+						# Increase pitch
+						if $Move.pitch_scale < 1:
+							$Move.pitch_scale += 0.015625 * delta
+							for i in range(wagons.size()):
+								wagons[i].get_node("Move").pitch_scale += 0.015625 * delta
 						# Increase the speed
 						sample_speed = move_toward(sample_speed, speed, 0.5 * delta)
 				if wagons.size() > 0:
 					# Move of the wagons and move wagons mesh
 					for i in range(wagons.size()):
 						wagons[i].progress += sample_speed * delta
+						#wagons[i].get_node(animatable_path).global_position = wagons[i].global_position
+						# Fix strange bug, where AnimatableBody rotates itself
+						#wagons[i].get_node(animatable_path).rotation = Vector3.ZERO
 				# Smooth rotation for player(s) (and item(s))
 				for w in wagons.size():
 					for i in range(wagons[w].objects_to_teleport.size()):
@@ -115,25 +134,29 @@ func _physics_process(delta):
 					var node: Node3D = get_node(objects_to_teleport[i])
 					node.global_rotation = node.global_rotation + (global_rotation - rotator[0])
 					rotator[0] = global_rotation
-		# Increase pitch when change speed
-		if sample_speed < speed:
-			if progress < waypoints.keys()[last_move] - speed * 8:
-				if $Move.pitch_scale < 1:
-					$Move.pitch_scale += 0.0625 * delta
-		elif !at_end && progress > waypoints.keys()[last_move] - speed * 8:
-			if $Move.pitch_scale > 0.5:
-				$Move.pitch_scale -= 0.0625 * delta
+	# Optimize physics
+	if get_viewport().get_camera_3d() == null:
+		set_physics_process(false)
+	#else:
+		#if global_position.distance_to(get_viewport().get_camera_3d().global_position) > 128.0:
+			#$Mesh.collision_layer = 0
+			#$Mesh.collision_mask = 0
+		#else: #If current player is near, enable collisions again
+			#$Mesh.collision_layer = 1
+			#$Mesh.collision_mask = 1
 
 ## Stop the transport
-func stop():
+func stop(open_doors: bool = true):
 	$Move.pitch_scale = 0.5
 	$Move.stop()
+	sample_speed = 0.1
 	changed_launch_state.emit(false)
-	call("open_dest_doors", waypoints[waypoints.keys()[last_move]])
+	if open_doors:
+		call("open_dest_doors", waypoints[waypoints.keys()[last_move]])
 	is_moving = false
 	await get_tree().create_timer(10.0).timeout
 	if !locked:
-		transport_move(true)
+		transport_move(open_doors)
 
 ## Open the door
 func door_open(left_or_right: bool):
@@ -190,10 +213,18 @@ func open_dest_doors(left_or_right: bool):
 func on_player_area_body_entered(body):
 	if body is CharacterBody3D: #|| body is Pickable:
 		call("add_object", body.get_path())
+		# Jolt physics optimization
+		if body is PlayerScript: #If current player is near, enable collisions again
+			$Mesh.collision_layer = 1
+			$Mesh.collision_mask = 1
 
 func on_player_area_body_exited(body):
 	if body is CharacterBody3D: # || body is Pickable:
 		call("remove_object", body.get_path())
+		# Jolt physics optimization
+		if body is PlayerScript:
+			$Mesh.collision_layer = 0
+			$Mesh.collision_mask = 0
 
 func add_object(name):
 	objects_to_teleport.append(name)

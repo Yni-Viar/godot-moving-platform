@@ -1,16 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cnd7vacptk6f7"]
+[gd_scene load_steps=10 format=3 uid="uid://cnd7vacptk6f7"]
 
-[ext_resource type="PackedScene" uid="uid://b2o8ikon245f3" path="res://Assets/Models/cable_car.tscn" id="1_dv03q"]
-[ext_resource type="PackedScene" uid="uid://bcdu8qcsg5rpt" path="res://Assets/Models/train_anka_head.tscn" id="2_wmpf6"]
-[ext_resource type="PackedScene" uid="uid://bh3em2b4sutma" path="res://Assets/Models/train_anka_back.tscn" id="3_l40uj"]
+[ext_resource type="PackedScene" uid="uid://dxx7spqhefi50" path="res://DynamicObjects/Vehicles/train_anka_head.tscn" id="2_0dy5s"]
+[ext_resource type="PackedScene" uid="uid://dwscd8ub8liuf" path="res://DynamicObjects/Vehicles/train_anka_back.tscn" id="3_f2nln"]
 [ext_resource type="PackedScene" uid="uid://cu440emlhve1m" path="res://FPSController/PlayerScene.tscn" id="4_ew1om"]
-
-[sub_resource type="Curve3D" id="Curve3D_h2221"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -85.6197, 49.5795, -33.4431, 0, 0, 0, 0, 0, 0, 21.1964, 0, -34.1497, 0, 0, 0, 0, 0, 0, 27.5775, 0, 7.88975, 0, 0, 0, 0, 0, 0, -86.4156, 48.7486, 10.1271, 0, 0, 0, 0, 0, 0, -85.6197, 49.5795, -33.4431),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
-}
-point_count = 5
 
 [sub_resource type="BoxMesh" id="BoxMesh_mu0s1"]
 size = Vector3(64, 1, 64)
@@ -25,33 +17,16 @@ _data = {
 }
 point_count = 11
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_k3ul1"]
-sky_top_color = Color(0.146664, 0.182903, 0.233298, 1)
-sky_horizon_color = Color(0.267534, 0.274577, 0.285696, 1)
-ground_bottom_color = Color(0.104614, 0.085056, 0.0623349, 1)
-ground_horizon_color = Color(0.267534, 0.274577, 0.285696, 1)
-sun_angle_max = 9.62
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_efk68"]
 
 [sub_resource type="Sky" id="Sky_swqm2"]
-sky_material = SubResource("ProceduralSkyMaterial_k3ul1")
+sky_material = SubResource("PhysicalSkyMaterial_efk68")
 
 [sub_resource type="Environment" id="Environment_wtrjl"]
 background_mode = 2
 sky = SubResource("Sky_swqm2")
 
 [node name="Test" type="Node3D"]
-
-[node name="Path3D" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8158, 18.5657)
-curve = SubResource("Curve3D_h2221")
-
-[node name="CableCar" parent="Path3D" instance=ExtResource("1_dv03q")]
-transform = Transform3D(0.00661396, 0.420998, -0.907034, -1.89242e-06, 0.907055, 0.421007, 0.999961, -0.00278286, 0.00600012, -66.1638, 40.5489, -33.5718)
-progress = 21.45
-waypoints = {
-21.45: true,
-109.05: false
-}
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.816729, 0.110747, -0.566294, 0.0466951, 0.965505, 0.256164, 0.575129, -0.23566, 0.783385, 0, 6.72037, 0)
@@ -68,27 +43,26 @@ mesh = SubResource("BoxMesh_mu0s1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_2iovv")
 
-[node name="Path3D2" type="Path3D" parent="."]
+[node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.63672, 0)
 curve = SubResource("Curve3D_ehtq3")
 
-[node name="MetrowagonAnka" parent="Path3D2" instance=ExtResource("2_wmpf6")]
-transform = Transform3D(0.000554887, 0.00351505, 0.999915, 0.00235152, 0.999936, -0.00351626, -0.999941, 0.00235346, 0.000546604, -16.0317, 0.257445, -34.6953)
-progress = 63.05
-waypoints = {
-63.05: false,
-397.85: false
-}
+[node name="MetrowagonAnka" parent="Path3D" instance=ExtResource("2_0dy5s")]
+transform = Transform3D(0.000983637, 0.00344516, 0.99999, 0.00244705, 0.999986, -0.00344756, -0.999993, 0.00245042, 0.000975198, -18.6317, 0.266499, -34.6973)
+progress = 65.65
+waypoints = Dictionary[float, bool]({
+68.2: false,
+451.1: false
+})
 connected_wagons = Array[NodePath]([NodePath("../MetrowagonAnka2")])
-wagon_offset = 26.0
 
-[node name="MetrowagonAnka2" parent="Path3D2" instance=ExtResource("3_l40uj")]
-transform = Transform3D(-0.00257467, 0.0040234, 0.999911, 0.00140559, 0.99995, -0.00401965, -0.999948, 0.00139524, -0.00258022, 9.6681, 0.160055, -34.7249)
-progress = 37.35
-waypoints = {
-63.05: false,
-397.85: false
-}
+[node name="MetrowagonAnka2" parent="Path3D" instance=ExtResource("3_f2nln")]
+transform = Transform3D(-0.00237963, 0.0039921, 0.999987, 0.00147941, 0.999989, -0.00398858, -0.999993, 0.0014699, -0.00238551, 7.66812, 0.168064, -34.7199)
+progress = 39.35
+waypoints = Dictionary[float, bool]({
+68.2: false,
+451.1: false
+})
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wtrjl")

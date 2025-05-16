@@ -1,4 +1,4 @@
-[gd_scene load_steps=354 format=4 uid="uid://bcdu8qcsg5rpt"]
+[gd_scene load_steps=358 format=4 uid="uid://dxx7spqhefi50"]
 
 [ext_resource type="Script" uid="uid://xies0jb5gk1c" path="res://Scripts/TransportSystem/TransportSystem.gd" id="1_kgqd0"]
 [ext_resource type="Texture2D" uid="uid://d1lmdmxbr72k8" path="res://Assets/Models/SubwayTrain/old/Leather033A_2K-PNG_Color.png" id="2_dfuv1"]
@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://bou0khelumxci" path="res://Assets/Models/SubwayTrain/old/wood_table_001_diff_1k.png" id="21_esuie"]
 [ext_resource type="Texture2D" uid="uid://thlp7nxl4r1y" path="res://Assets/Models/SubwayTrain/old/wood_table_001_rough_2k.png" id="22_q6y4l"]
 [ext_resource type="Texture2D" uid="uid://cecogmvt5cgwu" path="res://Assets/Models/SubwayTrain/old/wood_table_001_nor_gl_1k.png" id="23_m25ib"]
+[ext_resource type="Script" uid="uid://c776vgyx0vi12" path="res://Scripts/Triggers/StationTrigger.gd" id="25_5pkxl"]
+[ext_resource type="Script" uid="uid://b1i5l2kcsdbuh" path="res://Scripts/Triggers/TrainTrigger.gd" id="26_5d5pd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08xoi"]
 resource_name = "Hold"
@@ -4568,13 +4570,20 @@ _data = {
 &"door_open_right": SubResource("Animation_q0add")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vm152"]
-size = Vector3(3.89655, 3.91937, 23.4471)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ntmv0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5d5pd"]
+size = Vector3(3.785, 2.755, 3.565)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_25ex4"]
+size = Vector3(4.03732, 4.37369, 24.1266)
 
 [node name="MetrowagonAnka" type="PathFollow3D"]
 script = ExtResource("1_kgqd0")
-speed = 15.0
-move_sound = "res://Sounds/General/Train/Generic/trainmove_safe.wav"
+speed = 10.0
+move_sound = "res://Sounds/Vehicles/Train/Anka/subway-wagon_short.ogg"
+animatable_path = NodePath("Mesh")
+wagon_offset = 26.0
 
 [node name="Mesh" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.26309)
@@ -5436,17 +5445,38 @@ libraries = {
 &"": SubResource("AnimationLibrary_5fq82")
 }
 
+[node name="StationTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.246152, 0.894281, -11.117)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("25_5pkxl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StationTrigger"]
+shape = SubResource("BoxShape3D_ntmv0")
+
+[node name="TrainDetect" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.808905, -13.0427)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("26_5d5pd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainDetect"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.29001, -0.7606)
+shape = SubResource("BoxShape3D_5d5pd")
+
 [node name="Move" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.77125, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.71117, -0.461509)
 max_distance = 64.0
 
 [node name="PlayerArea" type="Area3D" parent="."]
-collision_layer = 7
-collision_mask = 7
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223694, 0.772614, -0.683044)
-shape = SubResource("BoxShape3D_vm152")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0357806, 0.689975, 0.0447657)
+shape = SubResource("BoxShape3D_25ex4")
 
+[connection signal="area_entered" from="TrainDetect" to="TrainDetect" method="_on_area_entered"]
+[connection signal="area_exited" from="TrainDetect" to="TrainDetect" method="_on_area_exited"]
 [connection signal="body_entered" from="PlayerArea" to="." method="on_player_area_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="on_player_area_body_exited"]
