@@ -1,8 +1,13 @@
 # Godot train system
 ## Info.
 An example of moving system.
-Cable car and a metrowagon model is under CC-BY license (made by me!)
+Metrowagon model is under CC-BY license (made by me!)
 The TransportSystem code is licensed under [MIT License](/LICENSE.MIT)
+
+## Features
+- Automatic door open (left or right), also determined stops by Path3D value.
+- Forward train detection
+- Player will not rotate in the train.
 
 ## How to create "transport" and make it moving
 1. Import your model
